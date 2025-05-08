@@ -1,0 +1,15 @@
+<div class="min-h-screen w-full flex justify-center items-center">
+
+   <div
+      class="rounded-3xl bg-white p-8 shadow-sm flex flex-col gap-4"
+   >
+
+      <input class="w-80" hlmInput placeholder="Email" type="email" [formControl]="email"/>
+
+      <input class="w-80" hlmInput placeholder="Password" type="password" [formControl]="password"/>
+
+      <button hlmBtn class="w-80" (click)="login()">Login</button>
+
+   </div>
+
+</div>
