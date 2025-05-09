@@ -10,7 +10,7 @@ export class UserService
 {
     id = 0
     name = ''
-    type: 'Provider' | 'Client' = 'Client'
+    email = ''
     
     
     constructor(
@@ -25,7 +25,9 @@ export class UserService
     {
         this.id = parseInt(this.cookieService.get('id'))
         this.name = this.cookieService.get('name')
-        this.type = this.cookieService.get('type') as any || 'Client'
+        this.email = this.cookieService.get('email')
+        
+        console.log(this.id, this.name, this.email)
     }
     
     
@@ -33,7 +35,7 @@ export class UserService
     {
         this.cookieService.delete('id')
         this.cookieService.delete('name')
-        this.cookieService.delete('type')
+        this.cookieService.delete('email')
         
         this.loadUser()
     }
@@ -45,34 +47,46 @@ export class UserService
     }
     
     
-    login(name: string, password: string)
+    login(email: string, password: string)
     {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) =>
+        {
             fetch(Server.url + '/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name,
+                    email,
                     password
                 })
             })
-            .then(res => res.json())
-            .then(res => {
-                if (res.error) {
-                    reject(res.error)
-                } else {
-                    this.cookieService.set('id', res.id)
-                    this.cookieService.set('name', res.name)
-                    this.cookieService.set('type', res.type)
-                    
-                    this.loadUser()
-                    console.log(this.id, this.name, this.type)
-                    resolve(res)
-                }
-            })
-            .catch(err => reject(err))
+                .then(res => res.json())
+                .then(res =>
+                {
+                    if (res.error)
+                    {
+                        reject(res.error)
+                    }
+                    else
+                    {
+                        if (res.login)
+                        {
+                            this.cookieService.set('id', res.user.id)
+                            this.cookieService.set('name', res.user.name)
+                            this.cookieService.set('email', res.user.email)
+                            
+                            this.loadUser()
+                            resolve(res)
+                        }
+                        else
+                        {
+                            alert('Invalid credentials')
+                            reject('Invalid credentials')
+                        }
+                    }
+                })
+                .catch(err => reject(err))
         })
     }
 }

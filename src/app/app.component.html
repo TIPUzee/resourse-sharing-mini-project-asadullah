@@ -1,9 +1,22 @@
-<div class="bg-slate-200">
+<div class="bg-slate-200 p-8">
 
    @if (user.isLoggedIn()) {
-      Not logged in
+
+      <div class="flex justify-end pb-10">
+         <button (click)="user.logout()" hlmBtn>Logout</button>
+      </div>
+
+      <app-make-post></app-make-post>
+
+
    } @else {
-      <app-login></app-login>
+      @if (!wantsSignUp) {
+         <button (click)="wantsSignUp = true" hlmBtn>Sign up</button>
+         <app-login></app-login>
+      } @else {
+         <app-signup></app-signup>
+      }
    }
+      <app-posts></app-posts>
 
 </div>

@@ -1,0 +1,31 @@
+<div class="py-16 flex flex-col gap-4 items-center">
+
+   @for (post of posts; track post.id) {
+
+      <div class="rounded-3xl bg-white p-6 shadow-sm flex flex-col w-fit">
+
+         <img src="" alt="">
+
+         <div>
+            @if (isImage(post.imageOrVideo) === null) {
+               <div>
+                  No image
+               </div>
+            }
+            @else if (isImage(post.imageOrVideo)) {
+               <img [src]="Server.url + reformat(post.imageOrVideo)" alt="" class="h-80 rounded-3xl"/>
+            } @else {
+               <video [src]="Server.url + reformat(post.imageOrVideo)" controls class="h-80 rounded-3xl"></video>
+            }
+
+            <h2>Title: {{ post.title }}</h2>
+            <h3>Caption: {{ post.caption }}</h3>
+            <h3>Location: {{ post.location }}</h3>
+            <h3>People: {{ post.people }}</h3>
+         </div>
+
+      </div>
+
+   }
+
+</div>

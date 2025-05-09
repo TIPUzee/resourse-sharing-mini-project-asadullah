@@ -1,0 +1,26 @@
+<div class="w-full flex justify-center items-center">
+
+   <form
+      class="rounded-3xl bg-white p-8 shadow-sm flex flex-col gap-4"
+      [formGroup]="form"
+   >
+
+      <input
+         class="w-80" hlmInput placeholder="Image or Video" type="file" formControlName="imageOrVideo"
+             accept="image/jpeg, image/png, image/gif, image/webp, video/mp4, video/webm"
+             (change)="onFileChange($event)"
+      />
+
+      <input class="w-80" hlmInput placeholder="Title" type="text" formControlName="title"/>
+
+      <input class="w-80" hlmInput placeholder="Caption" type="text" formControlName="caption"/>
+
+      <input class="w-80" hlmInput placeholder="Location" type="text" formControlName="location"/>
+
+      <input class="w-80" hlmInput placeholder="People" type="text" formControlName="people"/>
+
+      <button hlmBtn class="w-80" (click)="makePost()">Post</button>
+
+   </form>
+
+</div>
